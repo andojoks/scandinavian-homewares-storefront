@@ -1,0 +1,46 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Dependencies & build
+node_modules
+dist
+dist-ssr
+*.local
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Editor & OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Firebase
+.firebase
+firebase-debug.log*
+firestore-debug.log*
+ui-debug.log*
+
+# Sandbox / Build caches
+.cache
+.local
+.npm
+.sudo_as_admin_successful
+*.tsbuildinfo
+kvist-repo.zip
+kvist.bundle
+
+

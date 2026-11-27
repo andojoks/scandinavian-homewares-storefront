@@ -1,0 +1,81 @@
+<!doctype html>
+<!-- KVIST — a bento-grid store with sign-in and a live dashboard (React + Tailwind + Firebase) -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>KVIST — Calm objects for slow homes</title>
+    <meta
+      name="description"
+      content="Solid oak, bouclé and hand-thrown clay. KVIST makes furniture, lighting and textiles for slow homes, dispatched in 48 hours."
+    />
+    <meta name="theme-color" content="#f2efe9" />
+    <meta property="og:title" content="KVIST — Calm objects for slow homes" />
+    <meta
+      property="og:description"
+      content="Furniture, lighting and textiles made to be lived with."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Geist:wght@400..600&family=Geist+Mono:wght@400..500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preload" as="image" href="/images/chair.webp" fetchpriority="high" />
+    <script>
+      /* Capture mode, for screen-recording a demo; visitors never open the page this way.
+         ?record&slow=2 runs every clock the page reads (rAF timestamps, performance.now,
+         Date.now, timers) 2× slower, and keeps Motion off WAAPI so all of its animations
+         follow those clocks: a recorder filming at half speed gets a smooth 60fps.
+         Safe to delete with src/lib/record.ts. */
+      ;(function () {
+        var q = new URLSearchParams(location.search)
+        if (!q.has('record')) return
+        var S = Number(q.get('slow')) || 1
+        if (S === 1) return
+        delete Element.prototype.animate
+        var pn = performance.now.bind(performance),
+          r0 = pn()
+        var drive = null,
+          off = 0
+        var v = function (t) {
+          return drive ? off + drive() : r0 + (t - r0) / S
+        }
+        window.__kvistDrive = function (fn) {
+          var now = v(pn())
+          off = now - fn()
+          drive = fn
+        }
+        performance.now = function () {
+          return v(pn())
+        }
+        var d0 = Date.now()
+        Date.now = function () {
+          return Math.floor(d0 + v(pn()) - r0)
+        }
+        var raf = window.requestAnimationFrame.bind(window)
+        window.requestAnimationFrame = function (cb) {
+          return raf(function (t) {
+            cb(v(t))
+          })
+        }
+        var st = window.setTimeout.bind(window),
+          si = window.setInterval.bind(window)
+        window.setTimeout = function (fn, ms) {
+          return st.apply(window, [fn, (ms || 0) * S].concat([].slice.call(arguments, 2)))
+        }
+        window.setInterval = function (fn, ms) {
+          return si.apply(window, [fn, (ms || 0) * S].concat([].slice.call(arguments, 2)))
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
